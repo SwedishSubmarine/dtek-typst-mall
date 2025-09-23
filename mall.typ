@@ -1,42 +1,101 @@
-#let date = datetime.today()
-#let currentpage = context here().page()
-#let pagecount = context (counter(page).final().first())
-#let title = [
-  Verksamhetsrapport DNS 2025/2026
-]
+// Conf låter en skicka parametrar till templaten. De här kan vi alltså sätta i
+// våran "main" fil. De sätts till none här förutom styret som faktiskt har en
+// default. I våran mall så har vi gett defaults, men om de inte ändras på så
+// kommer dokumentet inte att bygga.
+#let conf(
+  name: none,
+  year: none,
+  committee: none,
+  period: none,
+  mail: "styret@dtek.se",
+  doc
+) = {
+  let date = datetime.today()
+  // And my mom said functional programming is worthless
+  let pagecount = context (counter(page).display((current,end) => [Sida #current av #end], both: true))
+  // Ändra det här för verksamhetsberättelse/plan template !!
+  let title = [Verksamhetsrapport #committee #year]
 
-#set heading(numbering: "1.a.")
-#set text(font: "New Computer Modern")
-#set par(justify: true)
+  // Rubriker har format 1.a.x. Rubriker och sub-rubriker skriver man med =, ==, ===.
+  set heading(numbering: "1.a.")
+  // Font, ändra inte size helst, vissa saker skulle bli fulare :(
+  set text(font: "New Computer Modern", size: 11pt)
+  // Justified text, stäng av om du hatar
+  set par(justify: true)
 
-#set page(paper: "a4", margin: (top: 4.5cm, x: 3.5cm),
-  header: align(
-    left+top, 
-    grid(
-      inset: (y: 2cm), 
-      columns: (16mm, 1fr),
-      gutter: 5pt, 
-        image("./Dataloggavit.png", height: 16mm, width: 16mm), 
+  // Definition för header och footer främst.
+  set page(paper: "a4", margin: (top: 4.5cm, bottom: 4cm, x: 3.5cm),
+    header:
+      align(
+      left+top,
+      grid(
+        inset: (y: 2cm),
+        // En kolumn för bild och en för resten
+        columns: (16mm, 1fr),
+        gutter: 5pt,
+
+        // Fick inte svg att funka, inkluderar båda i git repot 😭
+        image("./Dataloggavit.png", height: 16mm, width: 16mm),
+
         par(leading: 0.5em)[
-          #text(weight: "bold")[ Datateknologsektionen ]\
-          Chalmers studentkår #h(1fr) Sida #currentpage av #pagecount\
+          #text(weight: "bold")[Datateknologsektionen] \
+          // #h(1fr) innebär att  vi fyller ut med white space tills nästa text behöver finnas. Den texten blir implicit right-aligned
+          Chalmers studentkår #h(1fr) #pagecount \
           #title #h(1fr) #date.display()
-    ] + line(length: 100%, stroke: 0.5pt))
+        ]
+      ) +
+      // Den här är cursed men cool. Typst tycker 100% och 16mm är relativa så är fine att subtrahera så här för att linea upp bättre.
+      align(right, line(length: 100%-16mm, stroke: 0.5pt))
+    ),
+
+    footer:
+      line(length: 100%, stroke: 0.5pt) +
+      block(
+        spacing: 0.5em,
+        align(
+          left+top,
+          par(leading: 0.5em)[
+            Dateteknologsektionen #h(1fr) #link("mailto:" + mail) \
+            Rännvägen 8 #h(1fr) #link("www.dtek.se") \
+            412 58 Göteborg \
+          ]
+        )
+      )
   )
-)
 
-#align(center,
-  [
-    #text(size:20pt, weight: "bold")[
-      #title
+  // Genererar titeln, period ges av den som skriver och "title" genereras längre upp beroende på andra parametrar som användaren skickar med.
+  align(center,
+    par(leading:16pt)[
+      #text(size:17pt, weight: "bold")[
+        #title \
+      ]
+      #text(size:14pt)[
+        #period
+      ]
     ]
+  )
 
-    #text(size:16pt)[
-      Period: 2025-05-01 -- 2025-08-17
-    ]
+  // Den här är viktig! doc är vad som enligt våran conf faktiskt innehåller
+  // all våran text. Om doc försvinner här ifrån kommer ingen text dyka upp som
+  // den ska!
+  doc
+  // Snälla läs den övre kommentaren om du håller på att meka
+
+  v(1em)
+  text(style: "italic")[
+    #committee #year \
+    #text(style: "normal")[genom] \
+    #name
   ]
-)
+}
 
+#show: conf.with(
+  name: [ Emily Tiberg ],
+  year: [ 2025/2026 ],
+  committee: [ DNS ],
+  period: [ 2025-05-01 -- 2025-08-17 ],
+  mail: "dns@dtek.se"
+)
 = Arrangemangslista
-#lorem(1000)    
-#image("./Dataloggavit.png")
+#lorem(1000)
+
