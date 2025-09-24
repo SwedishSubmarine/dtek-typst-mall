@@ -1,101 +1,32 @@
-// Conf låter en skicka parametrar till templaten. De här kan vi alltså sätta i
-// våran "main" fil. De sätts till none här förutom styret som faktiskt har en
-// default. I våran mall så har vi gett defaults, men om de inte ändras på så
-// kommer dokumentet inte att bygga.
-#let conf(
-  name: none,
-  year: none,
-  committee: none,
-  period: none,
-  mail: "styret@dtek.se",
-  doc
-) = {
-  let date = datetime.today()
-  // And my mom said functional programming is worthless
-  let pagecount = context (counter(page).display((current,end) => [Sida #current av #end], both: true))
-  // Ändra det här för verksamhetsberättelse/plan template !!
-  let title = [Verksamhetsrapport #committee #year]
-
-  // Rubriker har format 1.a.x. Rubriker och sub-rubriker skriver man med =, ==, ===.
-  set heading(numbering: "1.a.")
-  // Font, ändra inte size helst, vissa saker skulle bli fulare :(
-  set text(font: "New Computer Modern", size: 11pt)
-  // Justified text, stäng av om du hatar
-  set par(justify: true)
-
-  // Definition för header och footer främst.
-  set page(paper: "a4", margin: (top: 4.5cm, bottom: 4cm, x: 3.5cm),
-    header:
-      align(
-      left+top,
-      grid(
-        inset: (y: 2cm),
-        // En kolumn för bild och en för resten
-        columns: (16mm, 1fr),
-        gutter: 5pt,
-
-        // Fick inte svg att funka, inkluderar båda i git repot 😭
-        image("./Dataloggavit.png", height: 16mm, width: 16mm),
-
-        par(leading: 0.5em)[
-          #text(weight: "bold")[Datateknologsektionen] \
-          // #h(1fr) innebär att  vi fyller ut med white space tills nästa text behöver finnas. Den texten blir implicit right-aligned
-          Chalmers studentkår #h(1fr) #pagecount \
-          #title #h(1fr) #date.display()
-        ]
-      ) +
-      // Den här är cursed men cool. Typst tycker 100% och 16mm är relativa så är fine att subtrahera så här för att linea upp bättre.
-      align(right, line(length: 100%-16mm, stroke: 0.5pt))
-    ),
-
-    footer:
-      line(length: 100%, stroke: 0.5pt) +
-      block(
-        spacing: 0.5em,
-        align(
-          left+top,
-          par(leading: 0.5em)[
-            Dateteknologsektionen #h(1fr) #link("mailto:" + mail) \
-            Rännvägen 8 #h(1fr) #link("www.dtek.se") \
-            412 58 Göteborg \
-          ]
-        )
-      )
+#show heading: set block(below: 1em)
+#set page(columns: 1)
+#import "template.typ": conf
+#let arr(label, text, description) = { 
+  grid(
+    columns: (auto, 1fr),
+    row-gutter: (10pt),
+    list(marker: "", label + h(2em)),
+    text,
+    if (description != "") { "" },
+    if (description != "") { description }
   )
-
-  // Genererar titeln, period ges av den som skriver och "title" genereras längre upp beroende på andra parametrar som användaren skickar med.
-  align(center,
-    par(leading:16pt)[
-      #text(size:17pt, weight: "bold")[
-        #title \
-      ]
-      #text(size:14pt)[
-        #period
-      ]
-    ]
-  )
-
-  // Den här är viktig! doc är vad som enligt våran conf faktiskt innehåller
-  // all våran text. Om doc försvinner här ifrån kommer ingen text dyka upp som
-  // den ska!
-  doc
-  // Snälla läs den övre kommentaren om du håller på att meka
-
-  v(1em)
-  text(style: "italic")[
-    #committee #year \
-    #text(style: "normal")[genom] \
-    #name
-  ]
 }
-
 #show: conf.with(
-  name: [ Emily Tiberg ],
-  year: [ 2025/2026 ],
-  committee: [ DNS ],
-  period: [ 2025-05-01 -- 2025-08-17 ],
-  mail: "dns@dtek.se"
+  name:  // Ändra till ditt namn här i en sträng.
+    "Emily Tiberg",
+  year: [ // Ändra till verksamhetsår
+    20xx/20xx
+  ],
+  committee: [ // Ändra till din kommitteec
+    Kommitte
+  ],
+  period: [ // Ändra till period rapporten gäller för
+    20YY-MM-DD -- 20YY-MM-DD 
+  ],
+  // Ta bort kommentarerna under här om du vill ändra på mail eller post, dessa kommer vara "styret@dtek.se" samt "ordförande" om du inte ändrar de.
+  // mail: "dnollk@dtek.se",
+  // post: "kassör",
 )
-= Arrangemangslista
-#lorem(1000)
 
+= Arrangemang
+#arr("20 Maj", "Ballmers peak plugg", "Under detta arret hände en massa grejer! Typ det här och det här och den där grejen och någon sprängdes och sedan kom polisen och sedan")
