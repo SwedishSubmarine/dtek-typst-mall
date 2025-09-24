@@ -98,6 +98,7 @@
     .pos()
     .map(event => (event.at(0), event.slice(1).map(par).join()))
     .flatten()
+  set grid.cell(breakable: false)
   grid(
     columns: (2.2cm, auto),
     row-gutter: 5mm,
