@@ -1,16 +1,25 @@
-#show heading: set block(below: 1em)
-#set page(columns: 1)
 #import "template.typ": conf
-#let arr(label, text, description) = { 
+
+#let arr(..events) = {
+  let new_events = events
+    .pos()
+    .map(event => (event.at(0), event.slice(1).map(par).join()))
+    .flatten()
   grid(
-    columns: (auto, 1fr),
-    row-gutter: (10pt),
-    list(marker: "", label + h(2em)),
-    text,
-    if (description != "") { "" },
-    if (description != "") { description }
+    columns: (auto, auto),
+    row-gutter: 5mm,
+    column-gutter: 5mm,
+    align: (col, row) => if col == 0 { right } else { left },
+    ..new_events
   )
 }
+
+#let pagar(text, description) = arr("Pågår", text, description)
+#let avslutat(text, description) = arr("Avslutat", text, description)
+#let vantar(text, description) = arr("Väntar", text, description)
+#let ny(text, description) = arr("Ny", text, description)
+
+#show heading: set block(below: 1em)
 #show: conf.with(
   name:  // Ändra till ditt namn här i en sträng.
     "Emily Tiberg",
@@ -29,4 +38,19 @@
 )
 
 = Arrangemang
-#arr("20 Maj", "Ballmers peak plugg", "Under detta arret hände en massa grejer! Typ det här och det här och den där grejen och någon sprängdes och sedan kom polisen och sedan")
+#arr( 
+  (
+    [20 Maj],
+    [Test],
+    [#lorem(50)]
+  ),
+  (
+    [21 Maj],
+    [Test 2]
+  ),
+  (
+    [22 Maj],
+    [Test],
+    [#lorem(50)]
+  )
+)

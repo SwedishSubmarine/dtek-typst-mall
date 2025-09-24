@@ -16,7 +16,6 @@
   let pagecount = context (counter(page).display((current,end) => [Sida #current av #end], both: true))
   // Ändra det här för verksamhetsberättelse/plan template !!
   let title = [Verksamhetsrapport #committee #year]
-  let arr = list(marker: []) + h(1em) + []
 
   // Rubriker har format 1.a.x. Rubriker och sub-rubriker skriver man med =, ==, ===.
   set heading(numbering: "1.a.")
