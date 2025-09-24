@@ -17,8 +17,12 @@
   // Ändra det här för verksamhetsberättelse/plan template !!
   let title = [Verksamhetsrapport #committee #year]
 
+  // Metadata till PDFen
+  set document(author: name, title: title)
   // Rubriker har format 1.a.x. Rubriker och sub-rubriker skriver man med =, ==, ===.
   set heading(numbering: "1.a.")
+  // Spacing mellan rubriker och text
+  show heading: set block(below: 1em)
   // Font, ändra inte size helst, vissa saker skulle bli fulare :(
   set text(font: "New Computer Modern", size: 11pt)
   // Justified text, stäng av om du hatar
@@ -66,13 +70,11 @@
 
   // Genererar titeln, period ges av den som skriver och "title" genereras längre upp beroende på andra parametrar som användaren skickar med.
   align(center,
-    par(leading:16pt)[
-      #text(size:17pt, weight: "bold")[
+    par(leading: 16pt)[
+      #text(size: 17pt, weight: "bold")[
         #title \
       ]
-      #text(size:14pt)[
-        #period
-      ]
+      #text(size: 14pt, period)
     ]
   )
 
@@ -97,7 +99,7 @@
     .map(event => (event.at(0), event.slice(1).map(par).join()))
     .flatten()
   grid(
-    columns: (auto, auto),
+    columns: (2.2cm, auto),
     row-gutter: 5mm,
     column-gutter: 5mm,
     align: (col, row) => if col == 0 { right } else { left },

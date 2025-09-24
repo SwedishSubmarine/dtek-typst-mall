@@ -1,9 +1,8 @@
 #import "template.typ": *
 
-#show heading: set block(below: 1em)
 #show: conf.with(
   // Ändra till ditt namn här
-  name: [Emily Tiberg],
+  name: "Namn Namnsson",
   // Ändra till verksamhetsår
   year: [ 20xx/20xx ],
   // Ändra till din kommittee
