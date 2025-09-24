@@ -20,7 +20,7 @@
   // Metadata till PDFen
   set document(author: name, title: title)
   // Rubriker har format 1.a.x. Rubriker och sub-rubriker skriver man med =, ==, ===.
-  set heading(numbering: "1.a.")
+  set heading(numbering: "1.1.")
   // Spacing mellan rubriker och text
   show heading: set block(below: 1em)
   // Font, ändra inte size helst, vissa saker skulle bli fulare :(
