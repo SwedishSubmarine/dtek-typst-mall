@@ -21,7 +21,7 @@
   // skriva text i. För arr så har man typiskt sett datum i första blocket, vad
   // det är för arr i andra blocket, och ibland en beskrivning i tredje
   // blocket.
-  ( 
+  (
     [20 Maj],
     [Arr utan beskrivning]
   ), // Efter att ha stängt parentesen så kan du sätta ett kommatecken och påbörja en beskrivning av ett nytt arr.
@@ -33,7 +33,7 @@
 )
 
 = Mottagning
-#lista( 
+#lista(
   // Man kan skapa en lista manuellt med avslutat i men vi har också en
   // shortcut så att man bara behöver fylla i två block. Den första är ett namn
   // för arret och den andra är beskrivningen för arret
@@ -79,7 +79,7 @@ förbereda nya elever bättre att använda git och för att använda en
 textredigerare.
 
 // Punkterna här under är bara ett förslag, ni kan lägga till hur många ni vill.
-== Mottagning 
+== Mottagning
 #lista(
   avslutat(
     [Världens bästa sittning],
@@ -87,7 +87,7 @@ textredigerare.
   ),
 )
 
-== Arrangemang 
+== Arrangemang
 #lista(
   vantar(
     [Ett arr som vi ska hålla under nästa läsperiod],
@@ -98,7 +98,7 @@ textredigerare.
 #lista(
   pagar(
     [Arbetar med programledningen på X],
-    [Här skriver man oftast om saker som har med skolan att göra] 
+    [Här skriver man oftast om saker som har med skolan att göra]
   ),
   pagar(
     [Någonting ifrån verksamhetsplanen],
