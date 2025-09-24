@@ -8,7 +8,7 @@
   committee: none,
   period: none,
   mail: "styret@dtek.se",
-  post: "Ordförande",
+  post: [Ordförande],
   doc
 ) = {
   let date = datetime.today()
@@ -89,3 +89,24 @@
     #name, #post
   ]
 }
+
+// En egen definierad lista som har valfir
+#let lista(..events) = {
+  let new_events = events
+    .pos()
+    .map(event => (event.at(0), event.slice(1).map(par).join()))
+    .flatten()
+  grid(
+    columns: (auto, auto),
+    row-gutter: 5mm,
+    column-gutter: 5mm,
+    align: (col, row) => if col == 0 { right } else { left },
+    ..new_events
+  )
+}
+
+// Hjälp-funktioner för att skapa specifika
+#let ny(..parts)       = ([Ny],       ..parts.pos())
+#let pagar(..parts)    = ([Pågår],    ..parts.pos())
+#let vantar(..parts)   = ([Väntar],   ..parts.pos())
+#let avslutat(..parts) = ([Avslutat], ..parts.pos())
