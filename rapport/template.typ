@@ -40,7 +40,7 @@
         gutter: 5pt,
 
         // Fick inte svg att funka, inkluderar båda i git repot 😭
-        image("./Dataloggavit.png", height: 16mm, width: 16mm),
+        image("../Dataloggavit.png", height: 16mm, width: 16mm),
 
         par(leading: 0.5em)[
           #text(weight: "bold")[Datateknologsektionen] \
