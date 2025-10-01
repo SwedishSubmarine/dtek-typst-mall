@@ -29,6 +29,8 @@
   set text(lang: "se", font: "New Computer Modern", size: 11pt)
   // Justified text, stäng av om du hatar
   set par(justify: true)
+  // Byt mellan jag/vi beroende på antal motionärer
+  show <pronomen>: if people.len() == 1 [jag] else [vi]
 
   // Definition för header och footer främst.
   set page(paper: "a4", margin: (top: 4.5cm, bottom: 4cm, x: 3.5cm),
@@ -98,7 +100,7 @@
 
 #let yrkande(..att_satser) = {
   heading([Yrkande])
-  par([Med ovanstående som bakgrund yrkar #(if people.len()==1 [jag] else [vi]) på:])
+  par([Med ovanstående som bakgrund yrkar #[]<pronomen> på:])
   v(0.25em)
   list(indent: 1em, spacing: 1em, ..att_satser.pos().map(value => text(weight: "bold", [att]) + value))
 }
