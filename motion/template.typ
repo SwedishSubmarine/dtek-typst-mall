@@ -38,22 +38,30 @@
       align(
       left+top,
       grid(
-        inset: (y: 2cm),
+        // inset: (y: 1.8cm),
         // En kolumn för bild och en för resten
-        columns: (16mm, 1fr),
+        columns: (16mm, 1fr, 4cm),
         gutter: 5pt,
 
         // Fick inte svg att funka, inkluderar båda i git repot 😭
+        v(1.8cm) + 
         image("./Dataloggavit.png", height: 16mm, width: 16mm),
 
+        v(1fr) + 
         par(leading: 0.5em)[
           #text(weight: "bold")[Datateknologsektionen] \
-          // #h(1fr) innebär att  vi fyller ut med white space tills nästa text behöver finnas. Den texten blir implicit right-aligned
-          Chalmers studentkår #h(1fr) #pagecount \
-          #title #h(1fr) #date.day() #translated-month(date) #date.year()
-        ]
+          Chalmers studentkår \
+          #title \
+        ],
+        v(1fr) + 
+        align(right, par(leading: 0.5em)[
+          \
+          #pagecount \
+          #date.day() #translated-month(date) #date.year()
+        ])
       ) +
       // Den här är cursed men cool. Typst tycker 100% och 16mm är relativa så är fine att subtrahera så här för att linea upp bättre.
+      v(-0.5em) + 
       align(right, line(length: 100%-16mm, stroke: 0.5pt))
     ),
 
@@ -92,8 +100,8 @@
   text(style: "italic")[
     #people.map(person => block(
       spacing: 0.5em,
-      (person.name, person.at("post", default: "") + " " + person.at("committee", default: ""), person.year)
-      .filter(item => item != " ")
+      (person.name, person.at("post", default: "") + " " + person.at("committee", default: ""), person.at("year", default: ""))
+      .filter(item => item != " " and item != "")
       .join(", "))
     ).join()
   ]
