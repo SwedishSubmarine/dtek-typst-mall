@@ -86,7 +86,8 @@
   // den ska!
   doc
   // Snälla läs den övre kommentaren om du håller på att meka
-  //
+  // Allting här under dyker alltså upp *under* all text som ni skriver i själva texten.
+  
   v(1em)
   text(style: "italic")[
     #people.map(person => block(
@@ -105,7 +106,6 @@
   list(indent: 1em, spacing: 1em, ..att_satser.pos().map(value => text(weight: "bold", [att]) + value))
 }
 
-// En egen definierad lista som har valfir
 #let lista(..events) = {
   let new_events = events
     .pos()
