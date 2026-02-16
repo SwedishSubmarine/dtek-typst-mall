@@ -2,7 +2,8 @@
 #show: conf.with(
   motion_name: "En lustig motion!",
   people: (
-    // Name och year är obligatoriska! Post och commitee är upp till var och en! 
+    // Name är obligatorisk! Post, year och commitee är upp till var och en! 
+    // OBS! Name kan vara ex dHack'25 om ni vill skicka ifrån en kommitte. I så fall, lämna year blankt.
     ( 
       name: "Emily Tiberg",
       post: "Ordförande", 
